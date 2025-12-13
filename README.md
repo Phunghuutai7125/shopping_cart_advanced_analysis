@@ -1,51 +1,66 @@
 # Shopping Cart Analysis
 
-Phân tích dữ liệu bán lẻ để tìm ra mối quan hệ giữa các sản phẩm thường được mua cùng nhau bằng các kỹ thuật **Association Rule Mining** (Apriori). Project triển khai pipeline đầy đủ từ xử lý dữ liệu → phân tích → khai thác luật → sinh báo cáo.
+Phân tích dữ liệu bán lẻ nhằm khám phá mối quan hệ giữa các sản phẩm thường được mua cùng nhau bằng các kỹ thuật **Association Rule Mining** như **Apriori** và **FP-Growth**.  
+Project triển khai pipeline đầy đủ từ xử lý dữ liệu → khai thác luật → so sánh thuật toán → trực quan hóa kết quả.
 
 ---
 
 ## Features
 
-- Làm sạch dữ liệu & xử lý giá trị lỗi
+- Làm sạch dữ liệu & xử lý giao dịch lỗi
 - Xây dựng basket matrix (transaction × product)
-- Khai phá tập mục phổ biến (Frequent itemsets)
+- Khai thác tập mục phổ biến (Frequent Itemsets)
 - Sinh luật kết hợp (Association Rules)
-- Các chỉ số:
+- Hỗ trợ 2 thuật toán:
+  - Apriori
+  - FP-Growth
+- So sánh Apriori vs FP-Growth
+- Các chỉ số đánh giá:
   - Support
   - Confidence
   - Lift
-- Visualization với:
-  - bar chart
-  - scatter plot
-  - network graph
-  - interactive Plotly
+- Trực quan hóa với:
+  - Bar chart
+  - Scatter plot
+  - Network graph
+  - Biểu đồ tương tác Plotly
 - Tự động hóa pipeline bằng **Papermill**
+- Dashboard tương tác bằng **Streamlit**
 
 ---
 
 ## Project Structure
 
 ```text
-shopping_cart_analysis/
+shopping_cart_advanced_analysis/
 ├── data/
 │   ├── raw/
 │   │   └── online_retail.csv
 │   └── processed/
 │       ├── cleaned_uk_data.csv
 │       ├── basket_bool.parquet
-│       └── rules_apriori_filtered.csv
+│       ├── rules_apriori_filtered.csv
+│       └── rules_fpgrowth_filtered.csv
 │
 ├── notebooks/
 │   ├── preprocessing_and_eda.ipynb
 │   ├── basket_preparation.ipynb
 │   ├── apriori_modelling.ipynb
+│   ├── fp_growth_modelling.ipynb
+│   ├── compare_apriori_fpgrowth.ipynb
 │   └── runs/
 │       ├── preprocessing_and_eda_run.ipynb
 │       ├── basket_preparation_run.ipynb
-│       └── apriori_modelling_run.ipynb
+│       ├── apriori_modelling_run.ipynb
+│       ├── fp_growth_modelling_run.ipynb
+│       └── compare_apriori_fpgrowth_run.ipynb
 │
 ├── src/
 │   └── apriori_library.py
+│
+├── dashboard/
+│   ├── app.py
+│   └── requirements.txt
 │
 ├── run_papermill.py
 ├── requirements.txt
@@ -58,16 +73,19 @@ shopping_cart_analysis/
 
 ```bash
 git clone <your_repo_url>
-cd shopping_cart_analysis
+cd shopping_cart_advanced_analysis
+conda create -n shopping_env python=3.11
+conda activate shopping_env
 pip install -r requirements.txt
-Data Preparation
-Đặt file gốc vào:
 ```
+
+Data Preparation
+Đặt file gốc tại:
 
 ```bash
 data/raw/online_retail.csv
-File output sẽ được sinh tự động vào:
 ```
+File output sẽ được sinh tự động vào:
 
 ```bash
 data/processed/
@@ -82,14 +100,22 @@ python run_papermill.py
 Kết quả sinh ra:
 
 ```bash
-data/processed/cleaned_uk_data.csv
-data/processed/basket_bool.parquet
-data/processed/rules_apriori_filtered.csv
-notebooks/runs/apriori_modelling_run.ipynb
+data/processed/
+├── cleaned_uk_data.csv
+├── basket_bool.parquet
+├── rules_apriori_filtered.csv
+└── rules_fpgrowth_filtered.csv
+
+notebooks/runs/
+├── preprocessing_and_eda_run.ipynb
+├── basket_preparation_run.ipynb
+├── apriori_modelling_run.ipynb
+├── fp_growth_modelling_run.ipynb
+└── compare_apriori_fpgrowth_run.ipynb
 ```
 
 ### Changing Parameters
-Các tham số có thể chỉnh trong run_papermill.py:
+Các tham số có thể chỉnh trong `run_papermill.py` hoặc trong cell `PARAMETERS` của mỗi notebook:
 
 ```python
 MIN_SUPPORT=0.01
@@ -97,23 +123,22 @@ MAX_LEN=3
 FILTER_MIN_CONF=0.3
 FILTER_MIN_LIFT=1.2
 ```
-
-Hoặc sửa trong cell PARAMETERS của mỗi notebook để chạy với cấu hình khác nhau.
+Papermill cho phép chạy pipeline với cấu hình khác nhau mà không cần sửa notebook gốc.
 
 ### Visualization & Results
-Notebook 03 hiển thị các biểu đồ sau:
+Các notebook modelling hiển thị các biểu đồ:
 
 Top luật theo Lift
 
 Top luật theo Confidence
 
-Scatter Support–Confidence–Lift
+Scatter Support – Confidence – Lift
 
-Network Graph giữa các sản phẩm
+Network graph giữa các sản phẩm
 
 Biểu đồ Plotly tương tác
 
-Bạn có thể export sang HTML:
+Có thể export notebook kết quả sang HTML:
 
 ```bash
 jupyter nbconvert notebooks/runs/priori_modelling_run.ipynb --to html
@@ -143,9 +168,11 @@ Sắp xếp sản phẩm tại siêu thị
 | Jupyter Notebook | Môi trường notebook |
 
 ### Roadmap
- Thêm FP-Growth notebook (04)
+Streamlit dashboard
 
- Streamlit dashboard để lọc luật
+Weighted association rules
+
+Correlation-aware rule ranking
 
 
 ### Author
