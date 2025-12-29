@@ -77,8 +77,8 @@ class DataCleaner:
             .str.zfill(6)
         )
 
-        print(f"Kích thước dữ liệu: {self.df.shape}")
-        print(f"Số bản ghi: {len(self.df):,}")
+        print(f"Data shape: {self.df.shape}")
+        print(f"Number of records: {len(self.df):,}")
 
         return self.df
 
@@ -194,7 +194,7 @@ class DataCleaner:
         os.makedirs(output_dir, exist_ok=True)
         output_path = f"{output_dir}/cleaned_uk_data.csv"
         self.df_uk.to_csv(output_path, index=False)
-        print(f"Đã lưu dữ liệu đã làm sạch: {output_path}")
+        print(f"Saved cleaned data to: {output_path}")
 
 
 # =========================================================
@@ -280,7 +280,7 @@ class BasketPreparer:
         basket_bool_to_save = self.basket_bool.reset_index(drop=True)
 
         basket_bool_to_save.to_parquet(output_path, index=False)
-        print(f"Đã lưu basket boolean: {output_path}")
+        print(f"Saved basket boolean to: {output_path}")
 
 
 # =========================================================

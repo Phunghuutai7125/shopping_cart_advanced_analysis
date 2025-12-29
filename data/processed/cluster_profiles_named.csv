@@ -1,0 +1,3 @@
+cluster,n_customers,recency_mean,frequency_mean,monetary_mean,top_rules,name_en,name_vn,persona_one_line,marketing_recommendations
+0,3920,0.00023373919220777458,-0.015170508895161966,-0.01540734371146794,,High Value,Khách giá trị cao,High-spend frequent buyers; likely VIP.,"VIP care, upsell premium bundles, loyalty rewards."
+1,1,-0.916257633454258,59.468394869034896,60.39678734895448,,High Value,Khách giá trị cao,High-spend frequent buyers; likely VIP.,"VIP care, upsell premium bundles, loyalty rewards."
