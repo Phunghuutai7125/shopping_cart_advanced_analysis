@@ -75,5 +75,36 @@ python -m streamlit run src/streamlit_app.py
 - Thử thuật toán phân cụm khác (DBSCAN/HDBSCAN). 
 - Review manual cho top rules (human-in-loop) để map đến SKU/nhóm sản phẩm.
 
+---
 
+## Lap4
+
+
+### Mục tiêu
+Phần lab này tập trung vào việc áp dụng thuật toán **Apriori** để:
+- Phân tích dữ liệu giao dịch bán lẻ
+- Khai thác các tập sản phẩm thường xuyên
+- Xây dựng và đánh giá các luật kết hợp
+- Trực quan hóa kết quả và rút ra nhận xét
+
+### Các bước chính đã thực hiện
+- Làm sạch dữ liệu và lọc theo quốc gia United Kingdom
+- Phân tích khám phá dữ liệu (EDA) theo thời gian và sản phẩm
+- Chuyển dữ liệu sang dạng giỏ hàng (basket / boolean matrix)
+- Áp dụng thuật toán Apriori để sinh frequent itemsets
+- Tạo và đánh giá Association Rules bằng các chỉ số:
+  - Support
+  - Confidence
+  - Lift
+- Trực quan hóa kết quả bằng biểu đồ Scatter và Network Graph
+
+### Nhận xét
+- Phần lớn các luật có **support thấp** do số lượng sản phẩm lớn và đa dạng.
+- Các luật có **confidence cao** thể hiện khả năng mua kèm rõ rệt.
+- **Lift > 1** cho thấy mối quan hệ mua chung mạnh hơn so với ngẫu nhiên.
+- Kết quả có thể được ứng dụng trong gợi ý sản phẩm và bán chéo.
+
+### Kết luận
+Bài lab giúp hiểu rõ hơn về cách áp dụng thuật toán Apriori trong thực tế,
+đồng thời cho thấy vai trò của khai phá dữ liệu trong việc hỗ trợ quyết định kinh doanh.
 
